@@ -1,4 +1,4 @@
-package gltf;
+package gltf.buffer;
 
 import org.json.JSONObject;
 

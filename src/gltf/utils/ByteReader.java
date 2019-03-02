@@ -1,4 +1,4 @@
-package gltf;
+package gltf.utils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -56,7 +56,10 @@ public class ByteReader {
         ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
                 .order(byteOrder).asShortBuffer()
                 .get(shorts, 0, nElem);
-        System.out.println(shorts);
+        for (short f :
+                shorts) {
+            System.out.println(f);
+        }
         return shorts;
     }
 
@@ -97,7 +100,10 @@ public class ByteReader {
         ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
                 .order(byteOrder).asFloatBuffer()
                 .get(floats, 0, nElem);
-        System.out.println(floats);
+        for (float f :
+                floats) {
+            System.out.println(f);
+        }
         return floats;
     }
 
@@ -111,5 +117,29 @@ public class ByteReader {
      */
     public static float[] readFloats(byte[] bytes, int off, int nElem) {
         return readFloats(bytes, off, nElem, byteOrder);
+    }
+
+    public static int[] readInts(byte[] bytes){
+        return readInts(bytes, 0, bytes.length/2);
+    }
+
+    public static int[] readInts(byte[] bytes, ByteOrder b){
+        return readInts(bytes, 0, bytes.length/2, b);
+    }
+
+    public static int[] readInts(byte[] bytes, int off, int nElem) {
+        return readInts(bytes, off, nElem, byteOrder);
+    }
+
+    private static int[] readInts(byte[] bytes, int off, int nElem, ByteOrder byteOrder) {
+        int[] ints = new int[nElem];
+        ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
+                .order(byteOrder).asIntBuffer()
+                .get(ints, 0, nElem);
+        for (int i :
+                ints) {
+            System.out.println(i);
+        }
+        return ints;
     }
 }

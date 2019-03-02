@@ -1,6 +1,6 @@
-package gltf;
+package gltf.type;
 
-public enum GLTFDataType {
+public enum GLTFAccessorType {
     SCALAR(1),
     VEC2(2),
     VEC3(3),
@@ -10,7 +10,7 @@ public enum GLTFDataType {
     MAT4(16);
     public final int size;
 
-    GLTFDataType(int size){
+    GLTFAccessorType(int size){
         this.size = size;
     }
 }

@@ -1,5 +1,6 @@
-package gltf;
+package gltf.buffer;
 
+import gltf.utils.ByteReader;
 import org.json.JSONObject;
 
 /**
@@ -10,13 +11,13 @@ import org.json.JSONObject;
  */
 public class GLTFBufferView {
 
-    protected final GLTFBuffer buffer;
+    public final GLTFBuffer buffer;
 
-    protected final int byteOffset;
-    protected final int byteLength;
-    protected final int byteStride;
-    protected final int target;
-    protected final String name;
+    public final int byteOffset;
+    public final int byteLength;
+    public final int byteStride;
+    public final int target;
+    public final String name;
 
     protected GLTFBufferView(GLTFBuffer buffer,
                              int byteOffset,
@@ -32,12 +33,12 @@ public class GLTFBufferView {
         this.name = name;
     }
 
-    protected GLTFBufferView(JSONObject bvObj, GLTFBuffer[] buffers){
+    public GLTFBufferView(JSONObject bvObj, GLTFBuffer[] buffers){
         this(
                 buffers[bvObj.getInt("buffer")],
                 bvObj.getInt("byteOffset"),
                 bvObj.getInt("byteLength"),
-                bvObj.has("byteSttride") ? bvObj.getInt("byteStride") : -1,
+                bvObj.has("byteStride") ? bvObj.getInt("byteStride") : -1,
                 bvObj.has("target") ? bvObj.getInt("target") : -1,
                 bvObj.getString("name"));
     }
@@ -71,5 +72,18 @@ public class GLTFBufferView {
                 this.byteOffset+byteOffset,
                 array, 0, nElem);
         return array;
+    }
+    /**
+     * returns a byte array containing the bytes from index byteOffset to
+     * index byteOfset+nElem. It calls System.arraycopy.
+     * @param byteOffset the offset (relative to the start of the
+     *                   bufferView) of the data to get
+     *                   from the buffer.
+     * @param nElem the number of bytes to read into the returned array
+     * @return a copy of the buffer from byteOffset to byteOffset+nElem
+     */
+    public int[] getInts(int byteOffset, int nElem) {
+        byte[] bytes = this.buffer.bytes;
+        return ByteReader.readInts(bytes,byteOffset+this.byteOffset, nElem);
     }
 }

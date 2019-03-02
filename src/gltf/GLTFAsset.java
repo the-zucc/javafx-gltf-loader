@@ -1,5 +1,12 @@
 package gltf;
 
+import gltf.accessor.GLTFAccessor;
+import gltf.buffer.GLTFBuffer;
+import gltf.buffer.GLTFBufferView;
+import gltf.exception.GLTFException;
+import gltf.exception.InvalidGLTFTypeException;
+import gltf.material.GLTFImage;
+import gltf.material.GLTFMaterial;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,13 +21,17 @@ public class GLTFAsset {
     private final JSONArray buffersJSON;
     private final JSONArray bufferViewsJSON;
     private final JSONArray accessorsJSON;
+    private final JSONArray imagesJSON;
+    private final JSONArray materialsJSON;
 
     public final GLTFBuffer[] buffers;
     public final GLTFBufferView[] bufferViews;
     public final GLTFAccessor[] accessors;
+    public final GLTFImage[] images;
+    public final GLTFMaterial[] materials;
 
 
-    public GLTFAsset(String filePath) throws IOException, InvalidGLTFTypeException {
+    public GLTFAsset(String filePath) throws IOException,GLTFException {
         this.gltfFile = new File(filePath);
         this.gltfDir = this.gltfFile.getParent();
         String content = new Scanner(this.gltfFile).useDelimiter("\\Z").next();
@@ -48,6 +59,23 @@ public class GLTFAsset {
                     this.accessorsJSON.getJSONObject(i),
                     this.bufferViews);
         }
+        this.imagesJSON = obj.getJSONArray("images");
+        this.images = new GLTFImage[this.imagesJSON.length()];
+        for(int i = 0; i < imagesJSON.length(); i++){
+            this.images[i] = GLTFImage.fromJSONObject(
+                this.imagesJSON.getJSONObject(i),
+                bufferViews,
+                gltfDir
+            );
+        }
+        this.materialsJSON = obj.getJSONArray("materials");
+        this.materials = new GLTFMaterial[this.materialsJSON.length()];
+        for (int i = 0; i < this.materialsJSON.length(); i++) {
+            this.materials[i] = GLTFMaterial.fromJSONObject(
+                this.materialsJSON.getJSONObject(i),
+                this.images
+                );
+        }
     }
 
     private GLTFBuffer getBufferFromIndex(int i) throws IOException {
@@ -55,15 +83,18 @@ public class GLTFAsset {
         return GLTFBuffer.fromBuffer(bObj, this.gltfDir);
     }
     public static void main(String[] args){
-        GLTFAsset asset = null;
+        int size = 100;
+        GLTFAsset[] assets = new GLTFAsset[size];
         try {
-            asset = new GLTFAsset("asset/scene.gltf");
-        } catch (InvalidGLTFTypeException e) {
+            for (int i = 0; i < size; i++) {
+                assets[i] = new GLTFAsset("asset/scene.gltf");
+            }
+        } catch (GLTFException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(asset.buffers[0].bytes.length);
-        System.out.println(asset.bufferViews.length);
+        System.out.println(""/*asset.buffers[0].bytes.length*/);
+        //System.out.println(asset.bufferViews.length);
     }
 }

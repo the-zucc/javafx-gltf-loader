@@ -1,4 +1,6 @@
-package gltf;
+package gltf.type;
+
+import gltf.exception.InvalidGLTFTypeException;
 
 public enum GLTFComponentType {
     BYTE(5120),
@@ -19,7 +21,7 @@ public enum GLTFComponentType {
      * @param id the ID of the componentType
      * @return the corresponding GLTFComponentType
      */
-    public static GLTFComponentType fromTypeId(int id) throws InvalidGLTFTypeException{
+    public static GLTFComponentType fromTypeId(int id) throws InvalidGLTFTypeException {
         switch (id){
             case 5120:
                 return BYTE;
@@ -34,6 +36,6 @@ public enum GLTFComponentType {
             case 5126:
                 return FLOAT;
         }
-        throw new InvalidGLTFTypeException();
+        throw new InvalidGLTFTypeException("could not find componentType "+id);
     }
 }

@@ -4,9 +4,9 @@ import gltf.accessor.GLTFAccessor;
 import gltf.buffer.GLTFBuffer;
 import gltf.buffer.GLTFBufferView;
 import gltf.exception.GLTFException;
-import gltf.exception.InvalidGLTFTypeException;
 import gltf.material.GLTFImage;
 import gltf.material.GLTFMaterial;
+import gltf.material.GLTFTexture;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,6 +29,7 @@ public class GLTFAsset {
     public final GLTFAccessor[] accessors;
     public final GLTFImage[] images;
     public final GLTFMaterial[] materials;
+    public final GLTFTexture[] textures;
 
 
     public GLTFAsset(String filePath) throws IOException,GLTFException {

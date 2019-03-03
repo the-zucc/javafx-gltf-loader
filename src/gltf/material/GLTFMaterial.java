@@ -1,29 +1,31 @@
 package gltf.material;
 
 
-import gltf.accessor.GLTFAccessor;
 import org.json.JSONObject;
 
 public class GLTFMaterial {
+    public final boolean doubleSided;
     protected final GLTFpbrMetallicRoughness pbrMetallicRoughness;
-    public final GLTFImage emissiveMap;
-    public final GLTFImage normalMap;
-    public final GLTFImage occlusionMap;
+    public final GLTFTexture emissiveMap;
+    public final GLTFTexture normalMap;
+    public final GLTFTexture occlusionMap;
 
     public GLTFMaterial(String materialName,
+                        boolean doubleSided,
                         GLTFpbrMetallicRoughness pbrMetallicRoughness,
-                        GLTFImage normalMap,
-                        GLTFImage occlusionMap,
-                        GLTFImage emissiveMap
-                        )
+                        GLTFTexture normalMap,
+                        GLTFTexture occlusionMap,
+                        GLTFTexture emissiveMap)
     {
+        this.doubleSided = doubleSided;
         this.pbrMetallicRoughness = pbrMetallicRoughness;
         this.normalMap = normalMap;
         this.occlusionMap = occlusionMap;
         this.emissiveMap = emissiveMap;
     }
 
-    public static GLTFMaterial fromJSONObject(JSONObject jsonObject, GLTFImage[] images) {
-        //TODO do this here
+    public static GLTFMaterial fromJSONObject(JSONObject jsonObject, GLTFTexture[] textures) {
+        //TODO code this method
+        return null;
     }
 }

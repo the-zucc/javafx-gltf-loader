@@ -22,14 +22,19 @@ public class GLTFNormalTextureInfo extends GLTFTextureInfo{
                 jObj.has("texCoord") ?
                     jObj.getInt("texCoord")
                     : 0,
-                jObj.getFloat("scale"),
+                jObj.has("scale") ?
+                    jObj.getFloat("scale")
+                    : 1,
                 jObj.has("extras") ?
                     jObj.getJSONObject("extras")
                     : null
                 );
         }catch(NullPointerException npe){
-            //catch the NullPointerException thrown by JSONObject.getInt() in case of a missing index propery
+            //catch the NullPointerException thrown by JSONObject.getInt() in case of a missing index property
             npe.printStackTrace();
+            System.out.println("Index property missing from JSONObject:\n"+jObj.toString(1));
+            GLTFException.throwGLTFExceptionWithCause(jObj);
+        }catch(Exception e){
             GLTFException.throwGLTFExceptionWithCause(jObj);
         }
         return null;

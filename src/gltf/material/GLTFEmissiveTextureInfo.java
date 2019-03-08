@@ -7,7 +7,7 @@ public class GLTFEmissiveTextureInfo extends GLTFTextureInfo{
     public GLTFEmissiveTextureInfo(GLTFTexture texture, int texCoord, JSONObject extras) {
         super(texture, texCoord, extras);
     }
-    public GLTFEmissiveTextureInfo fromJSONObject(JSONObject jObj, GLTFTexture[] textures) throws GLTFException {
+    public static GLTFEmissiveTextureInfo fromJSONObject(JSONObject jObj, GLTFTexture[] textures) throws GLTFException {
         try{
             return new GLTFEmissiveTextureInfo(
                 textures[jObj.getInt("index")],

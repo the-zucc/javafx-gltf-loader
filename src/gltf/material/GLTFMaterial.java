@@ -53,7 +53,7 @@ public class GLTFMaterial {
                     jObj.getBoolean("doubleSided")
                     : false,
                 jObj.has("pbrMetallicRoughness") ?
-                    GLTFpbrMetallicRoughness.fromJSONObject(jObj.getJSONObject("pbrMetallicRoughness"))
+                    GLTFpbrMetallicRoughness.fromJSONObject(jObj.getJSONObject("pbrMetallicRoughness"), textures)
                     : null,
                 jObj.has("normalTexture") ?
                     GLTFNormalTextureInfo.fromJSONObject(jObj.getJSONObject("normalTexture"), textures)

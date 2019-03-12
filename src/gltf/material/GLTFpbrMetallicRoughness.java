@@ -45,7 +45,7 @@ public class GLTFpbrMetallicRoughness {
                     jObj.getFloat("metallicFactor")
                     : 1.0f,
                 jObj.has("roughnessFactor") ?
-                    jObj.getFloat("roughnessFacotor")
+                    jObj.getFloat("roughnessFactor")
                     : 1.0f,
                 jObj.has("metallicRoughnessTexture") ?
                     GLTFTextureInfo.fromJSONObject(jObj.getJSONObject("metallicRoughnessTexture"), textures)

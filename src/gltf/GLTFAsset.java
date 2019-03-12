@@ -107,7 +107,9 @@ public class GLTFAsset {
         this.meshes = new GLTFMesh[this.meshesJSON.length()];
         for (int i = 0; i < this.meshesJSON.length(); i++) {
             this.meshes[i] = GLTFMesh.fromJSONObject(
-                this.meshesJSON.getJSONObject(i)
+                this.meshesJSON.getJSONObject(i),
+                this.accessors,
+                this.materials
             );
         }
     }
@@ -116,18 +118,9 @@ public class GLTFAsset {
         JSONObject bObj = (JSONObject)this.buffersJSON.get(i);
         return GLTFBuffer.fromBuffer(bObj, this.gltfDir);
     }
-    public static void main(String[] args){
-        int size = 100;
-        GLTFAsset[] assets = new GLTFAsset[size];
-        try {
-            for (int i = 0; i < size; i++) {
-                assets[i] = new GLTFAsset("asset/scene.gltf");
-            }
-        } catch (GLTFException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException, GLTFException {
+        GLTFAsset asset = new GLTFAsset("asset/scene.gltf");
+
         System.out.println(""/*asset.buffers[0].bytes.length*/);
         //System.out.println(asset.bufferViews.length);
     }

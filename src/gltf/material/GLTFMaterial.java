@@ -8,7 +8,7 @@ import static gltf.material.GLTFMaterialAlphaMode.OPAQUE;
 
 public class GLTFMaterial {
     public final boolean doubleSided;
-    protected final GLTFpbrMetallicRoughness pbrMetallicRoughness;
+    public final GLTFpbrMetallicRoughness pbrMetallicRoughness;
     public final GLTFNormalTextureInfo normalMap;
     public final GLTFOcclusionTextureInfo occlusionMap;
     public final GLTFTextureInfo emissiveMap;

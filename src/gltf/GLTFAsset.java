@@ -1,5 +1,6 @@
 package gltf;
 
+import com.sun.corba.se.impl.io.OptionalDataException;
 import gltf.accessor.GLTFAccessor;
 import gltf.buffer.GLTFBuffer;
 import gltf.buffer.GLTFBufferView;
@@ -28,6 +29,8 @@ public class GLTFAsset {
     private final JSONArray texturesJSON;
     private final JSONArray materialsJSON;
     private final JSONArray meshesJSON;
+    private final JSONArray nodesJSON;
+    public final JSONArray scenesJSON;
 
     public final GLTFBuffer[] buffers;
     public final GLTFBufferView[] bufferViews;
@@ -37,7 +40,8 @@ public class GLTFAsset {
     public final GLTFTexture[] textures;
     public final GLTFMaterial[] materials;
     public final GLTFMesh[] meshes;
-
+    public final GLTFNode[] nodes;
+    public final GLTFScene[] scenes;
 
 
 
@@ -110,6 +114,21 @@ public class GLTFAsset {
                 this.meshesJSON.getJSONObject(i),
                 this.accessors,
                 this.materials
+            );
+        }
+        this.nodesJSON = obj.getJSONArray("nodes");
+        this.nodes = new GLTFNode[this.nodesJSON.length()];
+        for (int i = 0; i < this.nodesJSON.length(); i++) {
+            this.nodes[i] = GLTFNode.fromJSONObject(
+                this.nodesJSON.getJSONObject(i)
+            );
+        }
+        this.scenesJSON = obj.getJSONArray("scenes");
+        this.scenes = new GLTFScene[this.scenesJSON.length()];
+        for (int i = 0; i < this.scenesJSON.length(); i++) {
+            this.scenes[i] = GLTFScene.fromJSONObject(
+                this.scenesJSON.getJSONObject(i),
+                this.nodes
             );
         }
     }

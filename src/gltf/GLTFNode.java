@@ -19,7 +19,8 @@ public class GLTFNode {
     public final static float[] DEFAULT_TRANSLATION= {0,0,0};
 
     public final GLTFCamera camera;
-    public final GLTFNode[] children;
+    public final int[] childrenIdxes;
+    private final GLTFNode[] nodes;
     public final GLTFSkin skin;
     public final float[] transformationMatrix;
     public final GLTFMesh mesh;
@@ -32,7 +33,8 @@ public class GLTFNode {
 
     public GLTFNode(
                     GLTFCamera camera,
-                    GLTFNode[] children,
+                    int[] childrenIdxes,
+                    GLTFNode[] nodes,
                     GLTFSkin skin,
                     float[] transformationMatrix,
                     GLTFMesh mesh,
@@ -45,7 +47,8 @@ public class GLTFNode {
                     )
     {
         this.camera = camera;
-        this.children = children;
+        this.childrenIdxes = childrenIdxes;
+        this.nodes = nodes;
         this.skin = skin;
         this.transformationMatrix = transformationMatrix;
         this.mesh = mesh;
@@ -77,8 +80,11 @@ public class GLTFNode {
                 null
                 : cameras[cameraIdx],
             childrenIdxes == null ?
+                new int[]{}
+                : childrenIdxes,
+            nodes == null ?
                 new GLTFNode[]{}
-                : getChildrenFromIdxes(childrenIdxes, nodes),
+                : nodes,
             skinIdx == -1 ?
                 null
                 : skins[skinIdx],
@@ -161,5 +167,17 @@ public class GLTFNode {
             GLTFException.throwGLTFExceptionWithCause(jObj);
         }
         return null;
+    }
+
+    private GLTFNode[] children = null;
+    public GLTFNode[] getChildren(){
+        if(children == null){
+            int len = this.childrenIdxes.length;
+            children = new GLTFNode[len];
+            for (int i = 0; i < len; i++) {
+                children[i] = nodes[childrenIdxes[i]];
+            }
+        }
+        return children;
     }
 }

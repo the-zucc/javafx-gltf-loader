@@ -29,8 +29,10 @@ public class GLTFAsset {
     private final JSONArray texturesJSON;
     private final JSONArray materialsJSON;
     private final JSONArray meshesJSON;
+    private final JSONArray skinsJSON;
+    private final JSONArray camerasJSON;
     private final JSONArray nodesJSON;
-    public final JSONArray scenesJSON;
+    private final JSONArray scenesJSON;
 
     public final GLTFBuffer[] buffers;
     public final GLTFBufferView[] bufferViews;
@@ -40,6 +42,8 @@ public class GLTFAsset {
     public final GLTFTexture[] textures;
     public final GLTFMaterial[] materials;
     public final GLTFMesh[] meshes;
+    public final GLTFSkin[] skins;
+    public final GLTFCamera[] cameras;
     public final GLTFNode[] nodes;
     public final GLTFScene[] scenes;
 
@@ -116,11 +120,36 @@ public class GLTFAsset {
                 this.materials
             );
         }
+        this.skinsJSON = obj.getJSONArray("skins");//TODO check if this key is correct.
+        this.skins = new GLTFSkin[this.skinsJSON.length()];
+        for (int i = 0; i < this.skinsJSON.length(); i++) {
+            this.skins[i] = GLTFSkin.fromJSONObject(
+                this.skinsJSON.getJSONObject(i)
+            );
+        }
+        if(obj.has("cameras")){
+            this.camerasJSON = obj.getJSONArray("cameras");
+            this.cameras = new GLTFCamera[this.camerasJSON.length()];
+            for (int i = 0; i < this.camerasJSON.length(); i++) {
+                this.cameras[i] = GLTFCamera.fromJSONObject(
+                    this.camerasJSON.getJSONObject(i)
+                );
+            }
+        }
+        else{
+            this.camerasJSON = null;
+            this.cameras = new GLTFCamera[]{};
+        }
+
         this.nodesJSON = obj.getJSONArray("nodes");
         this.nodes = new GLTFNode[this.nodesJSON.length()];
         for (int i = 0; i < this.nodesJSON.length(); i++) {
             this.nodes[i] = GLTFNode.fromJSONObject(
-                this.nodesJSON.getJSONObject(i)
+                this.nodesJSON.getJSONObject(i),
+                this.cameras,
+                this.nodes,
+                this.meshes,
+                this.skins
             );
         }
         this.scenesJSON = obj.getJSONArray("scenes");

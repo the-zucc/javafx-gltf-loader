@@ -56,10 +56,6 @@ public class ByteReader {
         ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
                 .order(byteOrder).asShortBuffer()
                 .get(shorts, 0, nElem);
-        for (short f :
-                shorts) {
-            System.out.println(f);
-        }
         return shorts;
     }
 
@@ -100,10 +96,6 @@ public class ByteReader {
         ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
                 .order(byteOrder).asFloatBuffer()
                 .get(floats, 0, nElem);
-        for (float f :
-                floats) {
-            System.out.println(f);
-        }
         return floats;
     }
 
@@ -136,10 +128,6 @@ public class ByteReader {
         ((ByteBuffer)ByteBuffer.wrap(bytes).position(off))
                 .order(byteOrder).asIntBuffer()
                 .get(ints, 0, nElem);
-        for (int i :
-                ints) {
-            System.out.println(i);
-        }
         return ints;
     }
 }

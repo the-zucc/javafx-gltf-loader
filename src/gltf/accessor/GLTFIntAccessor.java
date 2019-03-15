@@ -18,6 +18,6 @@ public class GLTFIntAccessor extends GLTFAccessor {
         super(bufferView, componentType, byteOffset, nElem, dataType);
         this.min = min;
         this.max = max;
-        this.data = this.bufferView.getInts(byteOffset, nElem);
+        this.data = this.bufferView.getInts(byteOffset, nElem*this.type.size);
     }
 }

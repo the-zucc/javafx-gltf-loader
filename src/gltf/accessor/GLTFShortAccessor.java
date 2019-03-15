@@ -18,6 +18,6 @@ public class GLTFShortAccessor extends GLTFAccessor {
         super(bufferView, componentType, byteOffset, nElem, dataType);
         this.min = min;
         this.max = max;
-        this.data = this.bufferView.getShorts(this.byteOffset, this.nElem);
+        this.data = this.bufferView.getShorts(this.byteOffset, this.nElem*this.type.size);
     }
 }

@@ -147,7 +147,10 @@ public class JFXGLTFAsset extends GLTFAsset {
             returnVal.getChildren().add(build3dNode(scene.nodes[i]));
         }
         //for debug purposes
-        //returnVal.getChildren().add(new Box(100, 100, 100));
+        returnVal.getChildren().add(new Box(100, 100, 100));
+        returnVal.setScaleX(4);
+        returnVal.setScaleY(4);
+        returnVal.setScaleZ(4);
         return returnVal;
     }
     public Group build3dNode(GLTFNode node){

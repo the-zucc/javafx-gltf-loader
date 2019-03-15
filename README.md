@@ -1,12 +1,11 @@
 # JavaFX GLTF Loader
-Tool to load GLTF models in Java. Currently in early development phase,
-so testing is not possible yet. 
+Tool to load GLTF models in Java. The early development phase is done,
+and models are being loaded, though improperly.
 
 ## current state of things
-The structure of GLTF files has been mostly recreated in Java, with most
-of the work on reading data from .gltf and .bin files has been done. The
-ability to import models into a JavaFX scene, however, has yet to be
-implemented. It is coming, however.
+There are huge graphical glitches, but the models are able to be loaded,
+and we can see something on the screen when running the test class!
+Not bad, for a uni freshman's first 3D loader, huh?
 
 ## direction
 I am working hard on the project, in order to make this an actually

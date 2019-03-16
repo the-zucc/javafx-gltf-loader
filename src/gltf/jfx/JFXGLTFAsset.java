@@ -19,6 +19,7 @@ import javafx.scene.shape.MeshView;
 import javafx.scene.shape.TriangleMesh;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.MatrixType;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 
 import java.io.IOException;
@@ -105,11 +106,15 @@ public class JFXGLTFAsset extends GLTFAsset {
             primitive.attributes.positionsAccessor.data
         );
         if(primitive.indicesAccessor != null){
-            returnVal.getFaces().addAll(
-                primitive.indicesAccessor.data
-            );
+            int[] data = primitive.indicesAccessor.data;
+            for (int i = 0; i < data.length; i++) {
+                returnVal.getFaces().addAll(
+                    data[i],
+                    data[i]//TODO use the right texCoord (for the second argument)
+                );
+            }
         }else{
-            System.out.println("No indices were given for the faces. ");
+            System.out.println("No indices were given for the faces.");
             //TODO fill in the indices array if no indices were given.
         }
         if(primitive.attributes.texCoords0Accessor != null){
@@ -147,10 +152,10 @@ public class JFXGLTFAsset extends GLTFAsset {
             returnVal.getChildren().add(build3dNode(scene.nodes[i]));
         }
         //for debug purposes
-        returnVal.getChildren().add(new Box(100, 100, 100));
-        returnVal.setScaleX(4);
-        returnVal.setScaleY(4);
-        returnVal.setScaleZ(4);
+        //returnVal.getChildren().add(new Box(100, 100, 100));
+        returnVal.setScaleX(40);
+        returnVal.setScaleY(40);
+        returnVal.setScaleZ(40);
         return returnVal;
     }
     public Group build3dNode(GLTFNode node){

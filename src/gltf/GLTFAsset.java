@@ -120,12 +120,18 @@ public class GLTFAsset {
                 this.materials
             );
         }
-        this.skinsJSON = obj.getJSONArray("skins");//TODO check if this key is correct.
-        this.skins = new GLTFSkin[this.skinsJSON.length()];
-        for (int i = 0; i < this.skinsJSON.length(); i++) {
-            this.skins[i] = GLTFSkin.fromJSONObject(
-                this.skinsJSON.getJSONObject(i)
-            );
+        if(obj.has("skins")){
+            this.skinsJSON = obj.getJSONArray("skins");//TODO check if this key is correct.
+            this.skins = new GLTFSkin[this.skinsJSON.length()];
+            for (int i = 0; i < this.skinsJSON.length(); i++) {
+                this.skins[i] = GLTFSkin.fromJSONObject(
+                    this.skinsJSON.getJSONObject(i)
+                );
+            }
+        }
+        else{
+            this.skinsJSON = null;
+            this.skins = new GLTFSkin[]{};
         }
         if(obj.has("cameras")){
             this.camerasJSON = obj.getJSONArray("cameras");

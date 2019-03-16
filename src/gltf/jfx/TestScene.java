@@ -12,12 +12,12 @@ public class TestScene extends Scene {
     }
     private PerspectiveCamera camera;
     public TestScene(Group root) {
-        super(root);
+        super(root, 800, 600, true);
         this.root = root;
         this.camera = new PerspectiveCamera(true);
         this.camera.setNearClip(0.5);
-        this.camera.setFarClip(1000);
-        Point3D cameraPos = new Point3D(5, 5, 5);
+        this.camera.setFarClip(5000);
+        Point3D cameraPos = new Point3D(0, -20, -20);
         this.camera.getTransforms().add(
             new Translate(
                 cameraPos.getX(),
@@ -25,8 +25,32 @@ public class TestScene extends Scene {
                 cameraPos.getZ()
             )
         );
-        lookAt(this.camera, cameraPos, Point3D.ZERO);
         this.setCamera(this.camera);
+        this.camera.setRotationAxis(Rotate.Z_AXIS);
+        this.camera.setRotate(180);
+        //this.camera.getTransforms().add(new Rotate(Math.toRadians(180), Rotate.Z_AXIS));
+        this.lookAt(this.camera, cameraPos, Point3D.ZERO);
+        final boolean[] isMoving = {false};
+        double[] mpos = {0, 0};
+        this.setOnMousePressed((e) -> {
+            isMoving[0] = true;
+        });
+        this.setOnMouseReleased((e) -> {
+            isMoving[0] = false;
+        });
+        this.setOnMouseDragged((e) -> {
+            if(isMoving[0]){
+                double dx = e.getSceneX() - mpos[0];
+                double dy = e.getSceneY() - mpos[0];
+                mpos[0] = e.getSceneX();
+                mpos[1] = e.getSceneY();
+                this.camera.getTransforms().add(new Rotate(Math.toRadians(dx/8), Rotate.Y_AXIS));
+                this.camera.getTransforms().add(new Rotate(Math.toRadians(dy/8), Rotate.X_AXIS));
+            }
+        });
+        this.setOnKeyPressed((e) -> {
+
+        });
     }
     public void lookAt(Node cam, Point3D cameraPosition, Point3D lookAtPos) {
         //Create direction vector
